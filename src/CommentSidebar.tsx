@@ -1,98 +1,70 @@
 import React, { useState } from 'react';
-import { Comment, CommentSidebarProps } from './commentTypes';
-import './CommentSidebar.css';
+import { Comment } from './types';
+
+interface CommentSidebarProps {
+  comments: Comment[];
+  onAddComment: (content: string) => void;
+  currentUser?: string;
+}
 
 const CommentSidebar: React.FC<CommentSidebarProps> = ({
   comments,
   onAddComment,
-  isLoading = false,
   currentUser = 'Current User'
 }) => {
   const [newComment, setNewComment] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!newComment.trim()) return;
-
-    setIsSubmitting(true);
     
-    try {
-      await new Promise(resolve => setTimeout(resolve, 300)); // Simulate API call
-      onAddComment(newComment);
-      setNewComment('');
-    } catch (error) {
-      console.error('Error adding comment:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    onAddComment(newComment);
+    setNewComment('');
   };
 
-  const formatTimestamp = (timestamp: string) => {
+  const formatTime = (timestamp: string) => {
     const date = new Date(timestamp);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-
+    
     if (diffMins < 1) return 'Just now';
     if (diffMins < 60) return `${diffMins}m ago`;
-    if (diffHours < 24) return `${diffHours}h ago`;
-    if (diffDays < 7) return `${diffDays}d ago`;
-    
+    if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
     return date.toLocaleDateString();
   };
 
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
+  const getInitials = (name: string) => 
+    name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0, 2);
 
   return (
-    <div className="comment-sidebar">
-      <div className="comment-sidebar-header">
-        <h3 className="comment-sidebar-title">
-          Comments ({comments.length})
-        </h3>
-      </div>
+    <div className="comments">
+      <header className="comments-header">
+        <h3>Comments ({comments.length})</h3>
+      </header>
 
-      <div className="comment-sidebar-content">
-        {isLoading ? (
-          <div className="comment-loading">
-            <div className="comment-loading-spinner"></div>
-            <span>Loading comments...</span>
-          </div>
-        ) : comments.length === 0 ? (
-          <div className="comment-empty">
-            <div className="comment-empty-icon">💬</div>
+      <div className="comments-content">
+        {comments.length === 0 ? (
+          <div className="comments-empty">
+            <div>💬</div>
             <p>No comments yet</p>
             <span>Be the first to add a comment!</span>
           </div>
         ) : (
-          <div className="comment-list">
-            {comments.map((comment) => (
-              <div key={comment.id} className="comment-item">
+          <div className="comments-list">
+            {comments.map(comment => (
+              <div key={comment.id} className="comment">
                 <div className="comment-avatar">
                   {comment.avatar ? (
                     <img src={comment.avatar} alt={comment.author} />
                   ) : (
-                    <div className="comment-avatar-initials">
-                      {getInitials(comment.author)}
-                    </div>
+                    <div className="avatar-initials">{getInitials(comment.author)}</div>
                   )}
                 </div>
                 <div className="comment-content">
                   <div className="comment-header">
                     <span className="comment-author">{comment.author}</span>
-                    <span className="comment-timestamp">
-                      {formatTimestamp(comment.timestamp)}
-                    </span>
+                    <span className="comment-time">{formatTime(comment.timestamp)}</span>
                   </div>
                   <div className="comment-text">{comment.content}</div>
                 </div>
@@ -102,42 +74,36 @@ const CommentSidebar: React.FC<CommentSidebarProps> = ({
         )}
       </div>
 
-      <div className="comment-sidebar-footer">
+      <footer className="comments-footer">
         <form onSubmit={handleSubmit} className="comment-form">
-          <div className="comment-input-container">
-            <div className="comment-current-user">
-              <div className="comment-avatar-initials small">
-                {getInitials(currentUser)}
-              </div>
-            </div>
+          <div className="comment-input-group">
+            <div className="avatar-initials small">{getInitials(currentUser)}</div>
             <textarea
-              className="comment-input"
               value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
+              onChange={e => setNewComment(e.target.value)}
               placeholder="Add a comment..."
               rows={2}
-              disabled={isSubmitting}
             />
           </div>
-          <div className="comment-form-actions">
-            <button
-              type="button"
-              className="comment-button comment-button-secondary"
+          <div className="comment-actions">
+            <button 
+              type="button" 
               onClick={() => setNewComment('')}
-              disabled={!newComment.trim() || isSubmitting}
+              disabled={!newComment.trim()}
+              className="btn-secondary"
             >
               Clear
             </button>
-            <button
+            <button 
               type="submit"
-              className="comment-button comment-button-primary"
-              disabled={!newComment.trim() || isSubmitting}
+              disabled={!newComment.trim()}
+              className="btn-primary"
             >
-              {isSubmitting ? 'Adding...' : 'Add Comment'}
+              Add Comment
             </button>
           </div>
         </form>
-      </div>
+      </footer>
     </div>
   );
 };

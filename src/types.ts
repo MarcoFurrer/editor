@@ -1,5 +1,3 @@
-import { Comment } from './commentTypes';
-
 export interface CartItem {
   id: string;
   title: string;
@@ -12,6 +10,14 @@ export interface CartItem {
   comments?: Comment[];
 }
 
+export interface Comment {
+  id: string;
+  author: string;
+  content: string;
+  timestamp: string;
+  avatar?: string;
+}
+
 export interface CartEditorProps {
   isOpen: boolean;
   onClose: () => void;
@@ -21,11 +27,4 @@ export interface CartEditorProps {
   showComments?: boolean;
   onAddComment?: (itemId: string, content: string) => void;
   currentUser?: string;
-  commentsLoading?: boolean;
-}
-
-export interface ValidationErrors {
-  title?: string;
-  description?: string;
-  assignedTo?: string;
 }

@@ -1,11 +1,9 @@
-/* Cart Editor Modal Styles */
-.cart-editor-overlay {
+/* Modern, Clean Cart Editor Styles */
+
+.cart-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,217 +11,496 @@
   padding: 20px;
 }
 
-.cart-editor-modal {
+.cart-modal {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   width: 100%;
   max-width: 600px;
   max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  animation: modalAppear 0.2s ease-out;
+  animation: slideUp 0.2s ease;
 }
 
-.cart-editor-modal.with-comments {
+.cart-modal.with-comments {
   max-width: 900px;
 }
 
-.cart-editor-main {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@keyframes modalAppear {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.cart-editor-header {
+.cart-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 24px 0 24px;
+  padding: 24px;
   border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 24px;
 }
 
-.cart-editor-title {
+.cart-header h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   color: #111827;
 }
 
-.cart-editor-close {
+.cart-header button {
   background: none;
   border: none;
   font-size: 24px;
   color: #6b7280;
   cursor: pointer;
-  padding: 4px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
   width: 32px;
   height: 32px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.15s;
 }
 
-.cart-editor-close:hover {
-  background-color: #f3f4f6;
+.cart-header button:hover {
+  background: #f3f4f6;
   color: #374151;
 }
 
-.cart-editor-form {
+.cart-main {
   display: flex;
-  flex-direction: column;
   flex: 1;
   overflow: hidden;
 }
 
-.cart-editor-content {
+.cart-form {
   flex: 1;
-  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: auto;
 }
 
-.cart-editor-field {
+.field {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.cart-editor-label {
+.field label {
   font-size: 14px;
   font-weight: 500;
   color: #374151;
 }
 
-.required {
-  color: #ef4444;
-}
-
-.cart-editor-input,
-.cart-editor-textarea,
-.cart-editor-select {
+.field input,
+.field textarea,
+.field select {
   padding: 12px 16px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 14px;
-  transition: all 0.2s ease;
-  background-color: white;
+  transition: all 0.15s;
+  font-family: inherit;
 }
 
-.cart-editor-input:focus,
-.cart-editor-textarea:focus,
-.cart-editor-select:focus {
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.cart-editor-input.error,
-.cart-editor-textarea.error {
+.field input.error,
+.field textarea.error {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-.cart-editor-textarea {
+.field textarea {
   resize: vertical;
-  min-height: 100px;
-  font-family: inherit;
+  min-height: 80px;
 }
 
-.cart-editor-error {
+.error-text {
   color: #ef4444;
   font-size: 12px;
-  margin-top: 4px;
 }
 
-.cart-editor-hint {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.cart-editor-row {
+.field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.cart-editor-checkbox-container {
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.checkbox-field label {
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   font-size: 14px;
-  color: #374151;
-  margin-top: 8px;
 }
 
-.cart-editor-checkbox {
+.checkbox-field input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: #3b82f6;
 }
 
-.cart-editor-footer {
+.cart-footer {
   padding: 24px;
   border-top: 1px solid #e5e7eb;
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  margin-top: 24px;
 }
 
-.cart-editor-button {
+.btn-secondary,
+.btn-primary {
   padding: 12px 24px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s;
   border: none;
-  min-width: 120px;
+  min-width: 100px;
 }
 
-.cart-editor-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.cart-editor-button-secondary {
-  background-color: #f9fafb;
+.btn-secondary {
+  background: #f9fafb;
   color: #374151;
   border: 1px solid #d1d5db;
 }
 
-.cart-editor-button-secondary:hover:not(:disabled) {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
+.btn-secondary:hover:not(:disabled) {
+  background: #f3f4f6;
 }
 
-.cart-editor-button-primary {
-  background-color: #3b82f6;
+.btn-primary {
+  background: #3b82f6;
   color: white;
 }
 
-.cart-editor-button-primary:hover:not(:disabled) {
-  background-color: #2563eb;
+.btn-primary:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Comments Sidebar */
+.comments {
+  width: 300px;
+  background: #fafafa;
+  border-left: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+}
+
+.comments-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+}
+
+.comments-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.comments-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+}
+
+.comments-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.comments-empty div:first-child {
+  font-size: 32px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.comments-empty p {
+  margin: 0 0 4px 0;
+  font-weight: 500;
+  color: #374151;
+}
+
+.comments-empty span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.comments-list {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar-initials {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.avatar-initials.small {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+}
+
+.comment-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.comment-author {
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.comment-time {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.comments-footer {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-input-group {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.comment-input-group textarea {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  transition: all 0.15s;
+}
+
+.comment-input-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.comment-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.comment-actions .btn-secondary,
+.comment-actions .btn-primary {
+  padding: 6px 12px;
+  font-size: 12px;
+  min-width: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-overlay {
+    padding: 10px;
+  }
+  
+  .cart-modal {
+    max-height: 95vh;
+  }
+
+  .cart-modal.with-comments {
+    max-width: 100%;
+  }
+
+  .cart-main {
+    flex-direction: column;
+  }
+
+  .comments {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .cart-header,
+  .cart-content,
+  .cart-footer {
+    padding: 16px;
+  }
+  
+  .cart-footer {
+    flex-direction: column-reverse;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .cart-modal {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+  
+  .cart-header {
+    border-bottom-color: #374151;
+  }
+  
+  .cart-header h2 {
+    color: #f9fafb;
+  }
+  
+  .cart-header button:hover {
+    background: #374151;
+    color: #d1d5db;
+  }
+  
+  .field label {
+    color: #d1d5db;
+  }
+  
+  .field input,
+  .field textarea,
+  .field select {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .cart-footer {
+    border-top-color: #374151;
+  }
+  
+  .btn-secondary {
+    background: #374151;
+    color: #d1d5db;
+    border-color: #4b5563;
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    background: #4b5563;
+  }
+  
+  .comments {
+    background: #1f2937;
+    border-left-color: #374151;
+  }
+  
+  .comments-header {
+    background: #111827;
+    border-bottom-color: #374151;
+  }
+  
+  .comments-header h3 {
+    color: #f9fafb;
+  }
+  
+  .comments-footer {
+    background: #111827;
+    border-top-color: #374151;
+  }
+  
+  .comment-author,
+  .comment-text {
+    color: #f9fafb;
+  }
+  
+  .comment-time {
+    color: #9ca3af;
+  }
+  
+  .comment-input-group textarea {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
 }
 
 /* Priority Badge Styling */
