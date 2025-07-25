@@ -9,9 +9,7 @@ const createEmptyItem = (): CartItem => ({
   description: '',
   complete: false,
   assignedTo: '',
-  priority: 'medium',
   dueDate: '',
-  tags: [],
   comments: []
 });
 
@@ -136,20 +134,6 @@ const CartEditor: React.FC<CartEditorProps> = ({
                 </div>
 
                 <div className="field">
-                  <label>Priority</label>
-                  <select
-                    value={data.priority}
-                    onChange={e => updateField('priority', e.target.value)}
-                  >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="field-row">
-                <div className="field">
                   <label>Due Date</label>
                   <input
                     type="date"
@@ -157,7 +141,9 @@ const CartEditor: React.FC<CartEditorProps> = ({
                     onChange={e => updateField('dueDate', e.target.value)}
                   />
                 </div>
+              </div>
 
+              <div className="field-row">
                 <div className="field checkbox-field">
                   <label>
                     <input
@@ -168,16 +154,6 @@ const CartEditor: React.FC<CartEditorProps> = ({
                     Mark as Complete
                   </label>
                 </div>
-              </div>
-
-              {/* Tags */}
-              <div className="field">
-                <label>Tags</label>
-                <input
-                  value={data.tags?.join(', ') || ''}
-                  onChange={e => updateField('tags', e.target.value.split(',').map(t => t.trim()).filter(Boolean))}
-                  placeholder="Enter tags separated by commas"
-                />
               </div>
             </div>
 

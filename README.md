@@ -32,8 +32,7 @@ function App() {
     title: 'Sample Task',
     description: 'This is a sample task description',
     complete: false,
-    assignedTo: 'John Doe',
-    priority: 'medium'
+    assignedTo: 'John Doe'
   });
 
   const handleSave = (savedItem: CartItem) => {
@@ -83,9 +82,7 @@ interface CartItem {
   description: string;
   complete: boolean;
   assignedTo: string;
-  priority?: 'low' | 'medium' | 'high';
   dueDate?: string;
-  tags?: string[];
   comments?: Comment[];
 }
 ```

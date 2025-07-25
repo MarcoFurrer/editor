@@ -4,9 +4,7 @@ export interface CartItem {
   description: string;
   complete: boolean;
   assignedTo: string;
-  priority?: 'low' | 'medium' | 'high';
   dueDate?: string;
-  tags?: string[];
   comments?: Comment[];
 }
 

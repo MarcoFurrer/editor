@@ -14,9 +14,7 @@ const Demo: React.FC = () => {
     description: 'Write comprehensive documentation for the new cart editor component including usage examples and API reference.',
     complete: false,
     assignedTo: 'John Doe',
-    priority: 'high',
     dueDate: '2024-08-01',
-    tags: ['documentation', 'urgent'],
     comments: [
       {
         id: '1',
